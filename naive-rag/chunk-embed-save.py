@@ -6,7 +6,7 @@ from extract_text import extract_text_from_pdf
 from embedding_model import create_embedding
 from createDB import store_document
 
-PDF_PATH="./papers"
+PDF_PATH="./naive-rag/papers"
 
 for filename in os.listdir(PDF_PATH):
     pdf_path=os.path.join(PDF_PATH, filename)

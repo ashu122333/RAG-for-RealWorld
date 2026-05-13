@@ -55,10 +55,19 @@ def get_all():
     conn.close()
     return rows
 
+def delete_all():
+    conn=connector()
+    c=conn.cursor()
+    c.execute("DELETE FROM documents")
+    conn.commit()
+    c.close()
+    conn.close()
+
 
 
 
 if __name__=="__main__":
+    # delete_all()
     create_db()
     # print(get_head())
    

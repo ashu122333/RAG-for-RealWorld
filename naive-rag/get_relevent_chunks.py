@@ -10,10 +10,10 @@ def get_relevant_chunks(query_embedding, top_k=5):
 
     rows = get_all()
     
-    print(len(rows))
+    # print(len(rows))
     done=1
     for row in rows:
-        print(done)
+        # print(done)
 
         content = row[0]
 

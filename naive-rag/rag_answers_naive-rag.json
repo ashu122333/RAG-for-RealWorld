@@ -1,0 +1,62 @@
+[
+    {
+        "question": "What improvement does Dense Passage Retrieval (DPR) achieve over BM25 in top-20 passage retrieval accuracy on open-domain QA?",
+        "answer": {
+            "answer": "19.3% (78.4% vs 59.1% for DPR vs BM25 on Natural Questions)"
+        }
+    },
+    {
+        "question": "Why is salient span masking critical to REALM's pre-training?",
+        "answer": {
+            "answer": "Salient span masking is crucial for REALM because latent variable learning relies heavily on the utility of retrieval, and masking scheme impacts the consistency of the learning signal."
+        }
+    },
+    {
+        "question": "What are the two RAG formulations introduced by Lewis et al., and how do they differ?",
+        "answer": {
+            "answer": "Naive RAG and Advanced RAG, with Naive RAG being the earliest methodology and Advanced RAG introducing specific improvements to overcome the limitations of Naive RAG."
+        }
+    },
+    {
+        "question": "What are the four types of reflection tokens in Self-RAG and what does each control?",
+        "answer": {
+            "answer": "Retrieve: decides when to retrieve with R\n ISREL: d provides useful information to solve x\n ISSUP: All of the verification-worthy statement in y is supported by d\n ISUSE: y is a useful response to x"
+        }
+    },
+    {
+        "question": "When and how does FLARE decide to trigger retrieval during long-form generation?",
+        "answer": {
+            "answer": "FLARE decides to trigger retrieval when necessary, and two forward-looking active retrieval augmented generation (FLARE) methods, FLAREinstruct and FLAREdirect, provide two ways for the model to elicit the need for retrieval. The FLAREinstruct method prompts the LM to generate retrieval queries using retrieval-encouraging instructions when the model is not confident in its knowledge, and the FLAREdirect method uses the LM's generation as search queries, iteratively generating the next sentence to gain insight into the future topic, and if uncertain tokens are present, retrieves relevant documents to regenerate the next sentence. Performance on 2WikiMultihopQA and StrategyQA shows that triggering retrieval for 40-80% of sentences usually leads to good performance across tasks/datasets, and that retrieval when LMs are confident is not necessary."
+        }
+    },
+    {
+        "question": "What are the three RAG paradigms described in the survey by Gao et al., and how do they progress?",
+        "answer": {
+            "answer": "Naive RAG, Advanced RAG, and Modular RAG"
+        }
+    },
+    {
+        "question": "What is the core idea behind KAPING for zero-shot knowledge graph question answering?",
+        "answer": {
+            "answer": "augmenting the knowledge directly in the input of LMs by retrieving relevant facts from the knowledge graph based on semantic similarities between the question and its associated facts, and then forwarding the augmented prompt to LMs to generate the answer"
+        }
+    },
+    {
+        "question": "What modules make up the RAG workflow studied in 'Searching for Best Practices in RAG', and what are some recommended choices?",
+        "answer": {
+            "answer": "The RAG workflow studied in 'Searching for Best Practices in RAG' includes six modules: query classification, retrieval, reranking, repacking, summarization, and a hybrid retrieval method with HyDE. The recommended choices for the best performance practice are: query classification module, Hybrid with HyDE method for retrieval, monoT5 for reranking, Reverse for repacking, and Recomp for summarization. For a balanced efficiency practice, the recommended choices are: query classification module, Hybrid method for retrieval, TILDEv2 for reranking, Reverse for repacking, and Recomp for summarization."
+        }
+    },
+    {
+        "question": "How do RAG-Sequence and RAG-Token differ at decoding time, and what trade-off does that create?",
+        "answer": {
+            "answer": "At decoding time, RAG-Sequence and RAG-Token differ in how they compute the probability of a hypothesis y. RAG-Token can use a standard beam decoder, while RAG-Sequence requires running beam search for each document z, and then estimating the probability of an hypothesis y with an additional forward pass for each document z. This creates a trade-off between speed and accuracy, with Fast Decoding offering faster decoding at the expense of accuracy, and Thorough Decoding offering more accurate results but requiring more computational resources."
+        }
+    },
+    {
+        "question": "Both FLARE and Self-RAG perform adaptive retrieval. How do their mechanisms differ in implementation and deployment cost?",
+        "answer": {
+            "answer": "FLARE uses a forward-looking approach, whereas Self-RAG uses a critique-guided approach. The implementation and deployment cost of FLARE is lower than that of Self-RAG, as FLARE does not require additional modules for adaptive retrieval, whereas Self-RAG requires a separate critic module. However, both models achieve comparable results in terms of performance and efficiency."
+        }
+    }
+]

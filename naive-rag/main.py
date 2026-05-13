@@ -1,11 +1,13 @@
+import json
+
 from embedding_model import create_embedding
 from get_relevent_chunks import get_relevant_chunks
 from chatLLM import generate_response
 
-query = "What is retrieval augmented generation?"
+query = "What is Maximum Inner Product Search (MIPS) and why is it used in retrieval-augmented language models?"
 
-for _ in range(5):
-    query=input("Enter your question: ")
+
+def main(query):
     # Create embedding
     query_embedding = create_embedding(query)
 
@@ -14,14 +16,21 @@ for _ in range(5):
 
     chunks = get_relevant_chunks(query_embedding)
 
-    for i, (content, embedding, similarity) in enumerate(chunks):
+    # for i, (content, embedding, similarity) in enumerate(chunks):
 
-        print(f"Chunk {i+1}:")
-        print(f"Content: {content}")
-        print(f"Similarity: {similarity}\n")
+    #     print(f"Chunk {i+1}:")
+    #     print(f"Content: {content}")
+    #     print(f"Similarity: {similarity}\n")
 
 
     context="\n".join([chunk[0] for chunk in chunks])
     response = generate_response(query, context)
-    print("Final Response:")
-    print(response)
+    # print("Final Response:")
+    # print(response)
+    return json.loads(response)[response]
+
+
+if __name__ == "__main__":    
+    main(query)
+
+    
