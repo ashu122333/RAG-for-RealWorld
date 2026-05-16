@@ -1,0 +1,44 @@
+{
+  "rag_eval_set": [
+    {
+      "question": "What improvement does Dense Passage Retrieval (DPR) achieve over BM25 in top-20 passage retrieval accuracy on open-domain QA?",
+      "answer": "DPR outperforms Lucene-BM25 by 9% to 19% absolute in top-20 retrieval accuracy across open-domain QA benchmarks. For example, on Natural Questions, DPR reaches 78.4% top-20 accuracy versus BM25's 59.1%. It is trained with a dual-encoder BERT architecture using in-batch negatives, optimizing the inner product between question and passage embeddings."
+    },
+    {
+      "question": "Why is salient span masking critical to REALM's pre-training?",
+      "answer": "REALM is pre-trained by masking salient spans (named entities, dates) rather than random tokens. Because the retriever is trained via the language-modeling signal, masking world-knowledge-bearing spans forces the model to rely on retrieved documents to fill the blank, producing a much stronger and more consistent learning signal. Ablations show salient span masking yields substantially higher Retrieval Utility than random token or random span masking."
+    },
+    {
+      "question": "What are the two RAG formulations introduced by Lewis et al., and how do they differ?",
+      "answer": "RAG-Sequence and RAG-Token. RAG-Sequence treats the retrieved document as a single latent variable: the same top-K documents are used to score the entire output, and the per-document likelihoods are marginalized at the sequence level. RAG-Token marginalizes over latent documents at every token, so different documents can contribute to different tokens of the same generation. RAG-Token therefore allows content from multiple documents to be combined within one answer, while RAG-Sequence commits to one document per generated sequence."
+    },
+    {
+      "question": "What are the four types of reflection tokens in Self-RAG and what does each control?",
+      "answer": "Self-RAG uses four reflection token types: (1) Retrieve {yes, no, continue} — decides whether to invoke the retriever; (2) IsRel {relevant, irrelevant} — judges whether a retrieved passage is useful for the input; (3) IsSup {fully supported, partially supported, no support} — judges whether the generated output is grounded in the passage; and (4) IsUse {1–5} — rates the overall usefulness of the response. These tokens are emitted from an expanded vocabulary, enabling adaptive retrieval and on-the-fly self-critique without RLHF."
+    },
+    {
+      "question": "When and how does FLARE decide to trigger retrieval during long-form generation?",
+      "answer": "FLARE first generates a tentative next sentence without retrieval. It then inspects the per-token probabilities of that sentence; if any token falls below a confidence threshold θ, retrieval is triggered. The low-confidence sentence (optionally with low-probability tokens masked, or rewritten as an explicit question) becomes the query, relevant documents are retrieved, and the sentence is regenerated conditioned on them. If all tokens are above θ, the tentative sentence is accepted as-is. The intuition: low LM confidence signals missing knowledge, and the upcoming sentence reflects future intent better than past context does."
+    },
+    {
+      "question": "What are the three RAG paradigms described in the survey by Gao et al., and how do they progress?",
+      "answer": "Naive RAG, Advanced RAG, and Modular RAG. Naive RAG follows a simple Retrieve-Read pipeline: index documents, retrieve top-k chunks by similarity, and feed them with the query to a frozen LLM. Advanced RAG adds pre-retrieval steps (query rewriting, expansion, routing) and post-retrieval steps (re-ranking, context compression, fusion) to fix Naive RAG's precision and noise problems. Modular RAG decomposes the pipeline into interchangeable modules (Search, Memory, Rewrite, Rerank, Read, Predict, Fusion) and supports non-linear patterns such as iterative, recursive, and adaptive retrieval — e.g., DSP and ITER-RETGEN."
+    },
+    {
+      "question": "What is the core idea behind KAPING for zero-shot knowledge graph question answering?",
+      "answer": "KAPING (Knowledge-Augmented language model PromptING) is a training-free framework that augments LLM prompts with relevant facts from a knowledge graph. For a question, it identifies the question's entities, retrieves their associated triples from the KG, verbalizes each triple into a natural-language string, and uses an off-the-shelf sentence embedding model (e.g., MPNet) to keep only the top-K triples most semantically similar to the question. These triples are prepended to the prompt so a frozen LLM can generate factual answers. On WebQSP and Mintaka, KAPING outperforms zero-shot baselines (no knowledge, random knowledge, popular knowledge, LLM-generated knowledge) by up to 48% on average."
+    },
+    {
+      "question": "What modules make up the RAG workflow studied in 'Searching for Best Practices in RAG', and what are some recommended choices?",
+      "answer": "The workflow has six modules: (1) Query Classification — decide whether retrieval is needed; (2) Retrieval — using BM25, Contriever, LLM-Embedder, with optional query rewriting / decomposition / HyDE / hybrid search; (3) Reranking — monoT5, monoBERT, RankLLaMA, TILDE; (4) Repacking — forward, reverse, or 'sides' arrangement of retrieved chunks; (5) Summarization — extractive (Recomp, BM25) or abstractive (LongLLMLingua, SelectiveContext, Recomp) context compression; (6) Generator fine-tuning. The paper finds that fine-tuning the generator with a mix of relevant and random documents improves robustness, and that hybrid search with HyDE plus a strong reranker offers the best quality/efficiency trade-off."
+    },
+    {
+      "question": "How do RAG-Sequence and RAG-Token differ at decoding time, and what trade-off does that create?",
+      "answer": "RAG-Token decodes like a standard autoregressive seq2seq: at each step it marginalizes the next-token distribution over the top-K documents, so a single beam search produces the output. RAG-Sequence's likelihood does not factorize cleanly per token, so the authors run a separate beam search for each retrieved document and then aggregate hypothesis scores — 'Thorough Decoding' runs an extra forward pass for each (hypothesis, document) pair, while 'Fast Decoding' approximates missing scores as zero. RAG-Token is cheaper and works well for longer outputs; RAG-Sequence (with Thorough Decoding) is preferred for short outputs like extractive QA, where the authors report test numbers with up to 50 retrieved documents."
+    },
+    {
+      "question": "Both FLARE and Self-RAG perform adaptive retrieval. How do their mechanisms differ in implementation and deployment cost?",
+      "answer": "FLARE is an inference-time, training-free method usable with any black-box LM (e.g., GPT-3.5 via API). It decides when to retrieve by monitoring the LM's token-level confidence on a tentative next sentence and triggers retrieval only when low-probability tokens appear. Self-RAG instead trains a generator LM end-to-end so that special reflection tokens (Retrieve, IsRel, IsSup, IsUse) become part of its output vocabulary; retrieval and self-critique decisions are emitted by the model itself, and a critic model is distilled offline from GPT-4 to label training data. FLARE has zero training cost and works with API-only models but cannot self-critique grounding; Self-RAG requires a labeled training corpus and a critic but offers controllable trade-offs at inference (e.g., weighting IsSup higher for higher citation precision) and learns retrieval policy into the parameters."
+    }
+  ]
+}

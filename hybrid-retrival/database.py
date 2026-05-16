@@ -47,6 +47,8 @@ def main():
     print("✅ Schema created on Neon. Table `chunks` is ready.")
 
 
+
+
 if __name__ == "__main__":
     main()
     
