@@ -1,0 +1,42 @@
+[
+    {
+        "question": "What improvement does Dense Passage Retrieval (DPR) achieve over BM25 in top-20 passage retrieval accuracy on open-domain QA?",
+        "answer": "78.4% vs. 59.1%"
+    },
+    {
+        "question": "Why is salient span masking critical to REALM's pre-training?",
+        "answer": "The attention mechanism in LLMs is not explicitly mentioned in the provided context. However, based on the general knowledge of LLMs, the attention mechanism is a key component that allows the model to focus on specific parts of the input sequence when generating the output. It is typically implemented using a weighted sum of the input elements, where the weights are learned during training. The attention mechanism is often used in conjunction with other components, such as the encoder and decoder, to enable the model to generate coherent and contextually relevant responses."
+    },
+    {
+        "question": "What are the two RAG formulations introduced by Lewis et al., and how do they differ?",
+        "answer": "RAG-Sequence and RAG-Token. RAG-Sequence uses the same retrieved document to generate the complete sequence, while RAG-Token can predict each target token based on a different document."
+    },
+    {
+        "question": "What are the four types of reflection tokens in Self-RAG and what does each control?",
+        "answer": "The four types of reflection tokens in Self-RAG are: Retrieve, ISREL, ISSUP, and ISUSE. They control the need for retrieval, the relevance of the retrieved passage, the support of the output by the passage, and the overall utility of the response, respectively."
+    },
+    {
+        "question": "When and how does FLARE decide to trigger retrieval during long-form generation?",
+        "answer": "FLARE decides to trigger retrieval when it generates a temporary next sentence that contains low-probability tokens. It uses this sentence as a query to retrieve relevant documents and then regenerates the next sentence conditioning on the retrieved documents."
+    },
+    {
+        "question": "What are the three RAG paradigms described in the survey by Gao et al., and how do they progress?",
+        "answer": "The three RAG paradigms described in the survey by Gao et al. are Naive RAG, Advanced RAG, and Modular RAG. Naive RAG is the earliest methodology, which gained prominence shortly after the widespread adoption of ChatGPT. It follows a traditional process that includes indexing, retrieval, and generation. Advanced RAG and Modular RAG are responses to the specific shortcomings in Naive RAG, and they offer enhanced adaptability and versatility. Advanced RAG focuses on post-retrieval process and LLM fine-tuning in generation, while Modular RAG incorporates diverse strategies for improving its components, such as adding a search module for similarity searches and refining the retriever through fine-tuning."
+    },
+    {
+        "question": "What is the core idea behind KAPING for zero-shot knowledge graph question answering?",
+        "answer": "KAPING proposes a method for zero-shot knowledge graph question answering by augmenting the knowledge directly in the input of large language models (LLMs) using knowledge graphs, without requiring any model training or additional data."
+    },
+    {
+        "question": "What modules make up the RAG workflow studied in 'Searching for Best Practices in RAG', and what are some recommended choices?",
+        "answer": "The RAG workflow studied in 'Searching for Best Practices in RAG' consists of the following modules: query classification, retrieval, reranking, repacking, and summarization. Recommended choices include: query classification module, Hybrid with HyDE method for retrieval, monoT5 for reranking, Reverse for repacking, and Recomp for summarization for best performance, and query classification module, Hybrid method for retrieval, TILDEv2 for reranking, Reverse for repacking, and Recomp for summarization for balanced efficiency."
+    },
+    {
+        "question": "How do RAG-Sequence and RAG-Token differ at decoding time, and what trade-off does that create?",
+        "answer": "RAG-Sequence and RAG-Token differ at decoding time in that RAG-Sequence uses the same document to predict each target token, while RAG-Token can predict each target token based on a different document. This creates a trade-off between the two models, where RAG-Sequence may be more efficient but less flexible, while RAG-Token may be more flexible but more computationally expensive."
+    },
+    {
+        "question": "Both FLARE and Self-RAG perform adaptive retrieval. How do their mechanisms differ in implementation and deployment cost?",
+        "answer": "FLARE uses a forward-looking active retrieval mechanism, whereas Self-RAG uses a self-reflective retrieval mechanism. FLARE's implementation and deployment cost are lower compared to Self-RAG, as it does not require the training of a critic model or the use of reflection tokens. Self-RAG's mechanism is more complex and requires additional training and computational resources, but it provides more fine-grained control over the retrieval and generation process."
+    }
+]
